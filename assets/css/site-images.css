@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Arbor Computers - photography & media layer
+   Loaded after the inline page styles. Everything photo/video related lives
+   here so new images and videos can be added without touching the base CSS.
+   ========================================================================== */
+
+/* ---- Full-bleed page hero with photo -------------------------------------
+   Usage: <header class="pagehero photo"><picture>…</picture><div class="wrap">…
+   ------------------------------------------------------------------------- */
+.pagehero.photo{min-height:clamp(440px,48vw,580px);display:grid;align-items:center;background:#0b2540}
+.pagehero.photo>picture{position:absolute;inset:0;display:block}
+.pagehero.photo>picture img,
+.pagehero.photo>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,70% 40%);opacity:1;-webkit-mask-image:none;mask-image:none}
+.pagehero.photo::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(8,25,45,.94) 0%,rgba(8,25,45,.82) 40%,rgba(8,25,45,.42) 68%,rgba(8,25,45,.1) 100%)}
+.pagehero.photo .wrap{z-index:2;width:min(1200px,calc(100% - 40px))}
+.pagehero h1{text-wrap:balance}
+.pagehero.photo h1,.pagehero.photo p{text-shadow:0 2px 24px rgba(5,15,28,.35)}
+@media (max-width:800px){
+  .pagehero.photo{min-height:0}
+  .pagehero.photo::after{background:linear-gradient(180deg,rgba(8,25,45,.76),rgba(8,25,45,.66))}
+  .pagehero.photo>picture img{object-position:var(--pos-m,65% 50%)}
+}
+
+/* ---- Photo frames inside split sections -------------------------------- */
+.split picture{display:block;position:relative}
+.split picture img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:24px;display:block;
+  box-shadow:0 30px 60px -30px rgba(11,37,64,.45),0 0 0 1px var(--line)}
+.split picture::before{content:"";position:absolute;inset:auto auto -14px -14px;width:46%;height:46%;border-radius:24px;background:var(--tint);z-index:-1}
+.split.flip picture::before{inset:auto -14px -14px auto}
+.split{isolation:isolate}
+@media (max-width:900px){.split picture::before{display:none}.split.flip picture{order:-1}}
+.split .eyebrow,.eyebrow{display:inline-block;margin-bottom:14px;padding:6px 12px;border-radius:999px;background:var(--tint);color:var(--blue-ink);font:700 13px/1 var(--body);letter-spacing:.04em;text-transform:uppercase}
+.split .text-link{display:inline-flex;gap:6px;align-items:center;margin-top:22px;font-weight:700;color:var(--blue-ink);text-decoration:none}
+.split .text-link:hover{text-decoration:underline}
+
+/* ---- Service cards with photos ----------------------------------------- */
+.card2 picture{display:block;overflow:hidden;position:relative}
+.card2 picture img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:var(--pos,50% 50%);display:block;transition:transform .5s ease}
+.card2:hover picture img,.card2:focus-visible picture img{transform:scale(1.045)}
+.card2 picture::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(180deg,transparent,rgba(8,25,45,.28));pointer-events:none}
+
+/* ---- Generic media helpers for upcoming images / videos ----------------
+   <figure class="media"><picture>…</picture><figcaption>…</figcaption></figure>
+   <figure class="media media-video"><video …></video></figure>
+   ------------------------------------------------------------------------- */
+.media{margin:0;border-radius:24px;overflow:hidden;background:var(--navy);box-shadow:0 30px 60px -30px rgba(11,37,64,.45),0 0 0 1px var(--line)}
+.media img,.media video{display:block;width:100%;height:auto}
+.media-video{aspect-ratio:16/9}.media-video video{height:100%;object-fit:cover}
+.media figcaption{padding:12px 18px;background:var(--surface);color:var(--muted);font-size:14px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px;display:block}
+
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .split picture::before{background:var(--tint)}}
